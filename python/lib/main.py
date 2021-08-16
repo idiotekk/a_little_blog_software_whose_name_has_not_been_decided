@@ -1,8 +1,6 @@
 import os, sys
-from article import Article, Template
 from interface import MainWindow
 from PyQt5.QtWidgets import QApplication
-
 
 
 
