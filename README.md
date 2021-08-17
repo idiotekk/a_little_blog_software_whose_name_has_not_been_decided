@@ -18,7 +18,7 @@ A candidate name for the software: \
 (proposed by [https://github.com/lin-du]; partly inspired by the poem below
 
 ```
-距离的组织\
+距离的组织
 作者：卞之琳
 
 想独上高楼读一遍《罗马衰亡史》
