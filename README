@@ -1,9 +1,0 @@
-This is a mini software to write blogs/diaries/journals/...
-
-Features:
-- support markdown language for body of glog articles
-- easy to publish to github
-- auto reminder at given time of day
-- export to pdf/html
-- has a install package, free to download
-- has a GUI
