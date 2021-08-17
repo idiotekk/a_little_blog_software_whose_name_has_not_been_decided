@@ -5,8 +5,8 @@ from PyQt5.QtCore import Qt, QTimer
 from PyQt5 import QtWidgets, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QMenuBar, QMenu, QAction, QTextEdit, QVBoxLayout, QLineEdit, QHBoxLayout
 from PyQt5.QtGui import QFont
-from backend.post import Post
-from backend.database import DataBase
+from ..backend.post import Post
+from ..backend.database import DataBase
 import logging as log
 
 parser = ArgumentParser()
@@ -68,12 +68,6 @@ class MainWindow(QMainWindow):
         # help
         help_menu = menu_bar.addMenu("&help")
 
-        # view
-        #preview_menu = menu_bar.addMenu("&preview")
-        #self.preview_markdown_action = preview_menu.addAction("&markdown")
-        #self.preview_markdown_action.setCheckable(True)
-        #self.preview_markdown_action.triggered.connect(self.preview_markdown)
-
         # help
         settings_menu = menu_bar.addMenu("&settings")
         menu_bar.addMenu(settings_menu)
@@ -95,41 +89,18 @@ class MainWindow(QMainWindow):
         self.current_post = post
 
         layout = QVBoxLayout()
-        sublayout = QHBoxLayout()
 
-        # add title and body
-        self.title_editor = QLineEdit()
-        self.title_editor.setText(post.title)
-        layout.addWidget(self.title_editor)
         self.body_editor = QTextEdit()
-        self.body_editor.setPlainText(post.body)
+        self.body_editor.setPlainText(post.text)
         layout.addWidget(self.body_editor)
-
-        """
-        self.body_editor = QTextEdit()
-        self.body_editor.setPlainText(post.body)
-        self.body_viewer = QTextEdit(readOnly=True)
-        sublayout.addWidget(self.body_editor)
-        sublayout.addWidget(self.body_viewer)
-        layout.addLayout(sublayout)
-
-        timer = QTimer(self)
-        timer.timeout.connect(self.refresh_preview_markdown)
-        timer.start(100)
-        """
-
+  
         self.wid = QtWidgets.QWidget(self)
         self.setCentralWidget(self.wid)
         self.wid.setLayout(layout)
     
-    """
-    def refresh_preview_markdown(self):
-        self.body_viewer.setMarkdown(self.body_editor.toPlainText())
-    """
 
     def save_post(self):
 
-        self.current_post.body = self.body_editor.toPlainText()
-        self.current_post.title = self.title_editor.text()
+        self.current_post.text = self.body_editor.toPlainText()
         log.debug(self.current_post)
         database.save_post(self.current_post)
