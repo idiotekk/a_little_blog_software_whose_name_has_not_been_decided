@@ -41,7 +41,7 @@ class DataBase:
             self.info = self.info.append(post_info)
         else:
             self.info.loc[post.post_id] = post_info
-        log.debug(self.info)
+        log.debug(f"\n{self.info}")
         
         # save post body
         post_path = self.post_dir / f"{post.post_id}.md"
@@ -53,7 +53,7 @@ class DataBase:
         """ Reads a post with given id.
         """
         if post_id in self.info.index:
-            post_path = self.post_dir / f"{post.post_id}.md"
+            post_path = self.post_dir / f"{post_id}.md"
             log.info(f"reading post at {post_path}")
             with open(post_path, "w") as f:
                 f.read(post.text)
