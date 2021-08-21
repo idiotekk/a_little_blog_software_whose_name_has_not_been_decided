@@ -1,4 +1,4 @@
-A high-level overview of the structure of the app.
+A high-level (unfriendly) sketch of the structure of the app.
 
 The app consists of two parts:
 1. Backend:
