@@ -1,6 +1,8 @@
 import os, sys
+
+from PyQt5.QtCore import qsrand
 from lib.interface import MainWindow
-from PyQt5.QtWidgets import QApplication
+from PyQt5.QtWidgets import QApplication, QStyle
 
 
 

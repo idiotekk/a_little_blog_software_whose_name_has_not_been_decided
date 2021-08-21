@@ -1,9 +1,9 @@
 # this file defined the interface of the app
 import sys, os
 from argparse import ArgumentParser
-from PyQt5.QtCore import Qt, QTimer
+from PyQt5.QtCore import Qt
 from PyQt5 import QtWidgets, QtGui
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QMenuBar, QMenu, QAction, QTextEdit, QVBoxLayout, QLineEdit, QHBoxLayout
+from PyQt5.QtWidgets import QMainWindow, QLabel, QMenuBar, QMenu, QAction, QTextEdit, QVBoxLayout, QLineEdit, QHBoxLayout, QFileDialog
 from PyQt5.QtGui import QFont
 from ..backend.post import Post
 from ..backend.database import DataBase
@@ -30,13 +30,14 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("mini mini blog")   # window title
         self._create_menu_bar()                 # create menu bar (file, edit, help, etc.)
         self.home()                             # go to home page by default
+        self.setStyle()
 
     def home(self):
         # greeting
-        self.greeting = QLabel(os.path.expandvars("Welcome back $USER :)\n How was your day?"))
-        self.greeting.setFont(QFont("Courier"))
-        self.greeting.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
-        self.setCentralWidget(self.greeting)
+        greeting = QLabel(os.path.expandvars("Welcome back $USER :)\n How was your day?"))
+        greeting.setFont(QFont("Courier"))
+        greeting.setAlignment(Qt.AlignHCenter | Qt.AlignVCenter)
+        self.setCentralWidget(greeting)
 
     def _create_menu_bar(self):
 
@@ -62,12 +63,6 @@ class MainWindow(QMainWindow):
         file_menu.addAction(file_save)
         file_save.triggered.connect(self.save_post)
 
-        # file -> edit
-        edit_menu = menu_bar.addMenu("&edit")
-
-        # help
-        help_menu = menu_bar.addMenu("&help")
-
         # help
         settings_menu = menu_bar.addMenu("&settings")
         menu_bar.addMenu(settings_menu)
@@ -76,6 +71,18 @@ class MainWindow(QMainWindow):
         home_menu = QAction("home", self)
         menu_bar.addAction(home_menu)
         home_menu.triggered.connect(self.home)
+
+
+    def open_file(self):
+
+        dlg = QFileDialog()
+        dlg.setFileMode(QFileDialog.AnyFile)
+        # dlg.setFilter("Text files (*.txt)")
+        filenames = QStringList()
+
+        if dlg.exec_():
+            filenames = dlg.selectedFiles()
+
 
     def new_post(self):
         post = Post()
@@ -90,17 +97,15 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout()
 
-        self.body_editor = QTextEdit()
-        self.body_editor.setPlainText(post.text)
-        layout.addWidget(self.body_editor)
+        self.editor = QTextEdit()
+        self.editor.setPlainText(post.text)
+        layout.addWidget(self.editor)
   
         self.wid = QtWidgets.QWidget(self)
         self.setCentralWidget(self.wid)
         self.wid.setLayout(layout)
-    
 
     def save_post(self):
 
-        self.current_post.text = self.body_editor.toPlainText()
-        log.debug(self.current_post)
-        database.save_post(self.current_post)
+        self.cur_post.update(self.editor.toPlainText())
+        database.save_post(self.cur_post)
