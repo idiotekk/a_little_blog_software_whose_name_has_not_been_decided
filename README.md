@@ -5,12 +5,12 @@ A preview of version 0.1.0:
 <img src="media/UI.png" alt="preview" width="500"/>
 
 ## Features
-- support markdown language for body of blog articles
+- has a simple, friendly GUI
+- supports markdown language for body of blog articles
 - easy to publish to github
 - auto reminder at given time of day
-- export to pdf/html
+- exports to pdf/html
 - has a install package, free to download
-- has a GUI
 
 ## Possible features
 (some of them may be BAD ideas :)
