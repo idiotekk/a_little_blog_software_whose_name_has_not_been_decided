@@ -12,7 +12,8 @@ A preview of version 0.1.0:
 - has a install package, free to download
 - has a GUI
 
-## Possible features: (some of them may be BAD ideas :)
+## Possible features
+(some of them may be BAD ideas :)
 - one post at most each day, so that each blog is uniquely binded with one day
 - each blog is labelled with a "DAY N" where N is the number of days that have passed since the first blog
 
