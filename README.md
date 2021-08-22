@@ -19,7 +19,7 @@ A preview of version 0.1.0:
 
 
 ## About the name
-TBD; a candidate name for the software:
+A candidate name for the software:
 "distance" 
 (proposed by [https://github.com/lin-du]; partly inspired by the poem below
 
