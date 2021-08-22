@@ -1,5 +1,9 @@
 This is a mini software to write blogs/diaries/journals/...
 
+A preview of version 0.1.0:
+
+![preview](media/UI.png)
+
 Features:
 - support markdown language for body of blog articles
 - easy to publish to github
