@@ -23,8 +23,10 @@ class Post:
 
     def extract_meta(self):
         _ = self.text.split("---")
-        assert len(_) >= 3
-        _, meta_str, *_ = _
+        if len(_) >= 3:
+            _, meta_str, *_ = _
+        else:
+            meta_str = "{}"
         self.meta = yaml.safe_load(meta_str)
 
     def update(self, raw_text):
@@ -33,5 +35,6 @@ class Post:
         print(f"{self.meta=}, {self.text=}")
     
     def gen_id(self):
-        self.post_id = pd.Timestamp.now().strftime("%Y%m%d%H%M%S")
-        log.info(f"generated new {self.post_id=}")
+        #self.ID = pd.Timestamp.now().strftime("%Y%m%d%H%M%S")
+        self.ID = pd.Timestamp.now().strftime("%Y-%b-%d")
+        log.info(f"generated new {self.ID=}")

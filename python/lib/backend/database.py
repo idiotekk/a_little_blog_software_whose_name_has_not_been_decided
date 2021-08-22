@@ -11,32 +11,45 @@ USER = os.path.expandvars("${USER}")
 
 class DataBase:
 
-    root_dir = pathlib.Path(ROOT_DIR)
-    post_dir = root_dir / "post"
-    meta_table_path = root_dir / "meta.csv"
+    _root_dir = pathlib.Path(ROOT_DIR)
+    _post_dir = _root_dir / "post"
+    _meta_table_path = _root_dir / "meta.csv"
 
     def __init__(self) -> None:
 
-        for _ in [self.root_dir, self.post_dir]:
+        for _ in [self._root_dir, self._post_dir]:
             if not os.path.exists(_):
                 log.info(f"creating {_}")
                 _.mkdir(parents=True, exist_ok=True)
-        self.meta_table = MetaTable(self.meta_table_path)
+        self.meta_table = MetaTable(self._meta_table_path)
 
     def save_post(self, post: Post):
         """ Save a post in database.
         """
-        self.meta_table.update(ID=post.post_id, meta=post.meta)
-        post_path = self.post_dir / f"{post.post_id}.md"
-        log.info(f"saving post at {post_path}")
-        with open(post_path, "w") as f: f.write(post.text)
+        self.meta_table.update(ID=post.ID, meta=post.meta)
+        path = self.ID2path(post.ID)
+        log.info(f"saving post at {path}")
+        with open(path, "w") as f: 
+            f.write(post.text)
     
-    def read_post(self, post_id: str) -> Post:
+    def read_post(self, ID: str=None, path: str=None) -> Post:
         """ Reads a post with given id.
         """
-        post_path = self.post_dir / f"{post_id}.md"
-        log.info(f"reading post at {post_path}")
-        with open(post_path, "w") as f: return f.read()
+        if ID is not None:
+            path = self.ID2path(ID)
+        log.info(f"reading post at {path}")
+        with open(path, "r") as f: 
+            text = f.read()
+        return text
+
+    def path2ID(self, path):
+        return path.split("/")[-1].removesuffix(".md")
+
+    def ID2path(self, ID):
+        return str(self._post_dir / f"{ID}.md")
+
+    @property
+    def post_dir(self): return str(self._post_dir)
 
 
 class MetaTable:
